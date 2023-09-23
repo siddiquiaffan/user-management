@@ -14,8 +14,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 
-import { AuthModule } from './auth/auth.module';
+import { HttpClientModule } from '@angular/common/http';
 
+// import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +25,7 @@ import { AuthModule } from './auth/auth.module';
     BrowserModule,
     BrowserAnimationsModule, // Required for animations
     AppRoutingModule,
+    HttpClientModule,
 
     // MaterialModule,
     MatButtonModule,
@@ -32,6 +35,7 @@ import { AuthModule } from './auth/auth.module';
     MatSortModule,
 
     // AuthModule,
+    // UsersModule
   ],
   providers: [],
   bootstrap: [AppComponent],

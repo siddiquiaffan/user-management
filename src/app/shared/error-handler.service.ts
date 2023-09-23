@@ -21,9 +21,9 @@ export class ErrorHandlerService {
     }
 
     // You can log the error or display a user-friendly message here.
-    console.error(errorMessage);
+    console.error(errorMessage, 'Error');
 
     // Return an observable with a user-facing error message
-    return throwError(errorMessage);
+    return throwError({ ...error, msg: errorMessage, });
   }
 }

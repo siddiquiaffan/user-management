@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,36 +11,41 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  isLoading: boolean = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = null as any;
   }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.pattern(
-        /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/,
-      )]],
+      password: ['cityslicka', [Validators.required]],
     });
   }
 
   onSubmit() {
-    if (this.loginForm.valid) {
-      const email = this.loginForm.get('email')?.value;
-      const password = this.loginForm.get('password')?.value;
+    if (!this.loginForm.valid)
+      return window.alert('Invalid');
 
-      this.authService.login(email, password).subscribe(
-        (response) => {
-          // Handle successful login (e.g., store token and redirect)
-          // add token in cookie
-          document.cookie = `token=${response.token}`;
-        },
-        (error) => {
-          // Handle login error (e.g., display an error message)
-          window.alert(error?.message ?? 'Failed to login');
-        }
-      );
-    }
+    this.isLoading = true;
+    const email = this.loginForm.get('email')?.value;
+    const password = this.loginForm.get('password')?.value;
+
+    this.authService.login(email, password).subscribe(
+      (response) => {
+        document.cookie = `token=${response.token}`;
+        this.router.navigate(['/'])
+      },
+      (error) => {
+      // Handle login error (e.g., display an error message)
+        window.alert(error?.status === 400 ? 'User not found' : 'Failed to login');
+        this.isLoading = false;
+      },
+      () => {
+        this.isLoading = false;
+      }
+    );
+
   }
 }

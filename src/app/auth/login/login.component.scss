@@ -1,0 +1,22 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginform {
+    width: max-content;
+    max-width: 400px;
+    padding: 25px 90px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0px 5px 30px 0px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 5px 30px 0px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0px 5px 30px 0px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

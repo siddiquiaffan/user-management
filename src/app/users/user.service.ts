@@ -14,8 +14,8 @@ export class UserService {
   constructor(private http: HttpClient, private errorHandler: ErrorHandlerService) { }
 
   // Method to fetch a list of users with pagination
-  getUsers(page: number): Observable<any> {
-    const url = `${this.apiUrl}?page=${page}`;
+  getUsers(page: number = 1, perPage: number = 6): Observable<any> {
+    const url = `${this.apiUrl}?page=${page}&per_page=${perPage}`;
     return this.http
       .get(url)
       .pipe(catchError(this.errorHandler.handleError));
